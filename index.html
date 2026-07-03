@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cotizador Obra Blanca — WVC Ingeniería S.A.S.</title>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#2D2D34">
+<link rel="apple-touch-icon" href="icon-192.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --raisin:#1d1d22;
+  --raisin-2:#2D2D34;
+  --panel:#26262c;
+  --field:#1a1a1f;
+  --line:#3c3c44;
+  --cornsilk:#FEFAE0;
+  --cornsilk-dim:#c9c5ad;
+  --caramel:#DF8438;
+  --caramel-soft:rgba(223,132,56,.14);
+  --green:#4a6b1f;
+  --green-bright:#7fa63a;
+  --danger:#c4574f;
+  --radius:10px;
+  --font-display:"Archivo",sans-serif;
+  --font-body:"Inter",sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  background:var(--raisin);
+  color:var(--cornsilk);
+  font-family:var(--font-body);
+  font-size:15px;
+  line-height:1.5;
+  -webkit-font-smoothing:antialiased;
+}
+/* ---------- Encabezado ---------- */
+header.app-header{
+  border-bottom:1px solid var(--line);
+  background:linear-gradient(180deg,#232328 0%,var(--raisin) 100%);
+  padding:28px 24px 22px;
+}
+.header-inner{max-width:960px;margin:0 auto;display:flex;flex-wrap:wrap;align-items:baseline;gap:8px 16px}
+.brand{
+  font-family:var(--font-display);
+  font-variation-settings:"wdth" 118,"wght" 800;
+  font-size:1.05rem;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--cornsilk);
+}
+.brand span{color:var(--caramel)}
+h1{
+  flex-basis:100%;
+  font-family:var(--font-display);
+  font-variation-settings:"wdth" 112,"wght" 750;
+  font-size:clamp(1.5rem,4vw,2.2rem);
+  text-transform:uppercase;letter-spacing:.02em;
+  color:var(--cornsilk);
+}
+h1 em{font-style:normal;color:var(--caramel)}
+.tagline{color:var(--cornsilk-dim);font-size:.85rem;letter-spacing:.04em}
+/* ---------- Layout ---------- */
+main{max-width:960px;margin:0 auto;padding:26px 24px 90px}
+section.card{
+  background:var(--panel);
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  margin-bottom:26px;
+  overflow:hidden;
+}
+.card-head{
+  display:flex;align-items:center;gap:10px;
+  padding:16px 20px;
+  border-bottom:1px solid var(--line);
+  background:rgba(0,0,0,.18);
+}
+.card-head .num{
+  font-family:var(--font-display);
+  font-variation-settings:"wdth" 100,"wght" 700;
+  font-size:.72rem;color:var(--raisin);
+  background:var(--caramel);
+  border-radius:4px;padding:2px 7px;letter-spacing:.05em;
+}
+.card-head h2{
+  font-family:var(--font-display);
+  font-variation-settings:"wdth" 110,"wght" 700;
+  font-size:.86rem;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--caramel);
+}
+.card-body{padding:20px}
+/* ---------- Formularios ---------- */
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px}
+.field label{
+  display:block;font-size:.78rem;color:var(--cornsilk-dim);
+  margin-bottom:6px;letter-spacing:.03em;
+}
+.field label .req{color:var(--caramel)}
+input[type=text],input[type=tel],input[type=email],input[type=number],textarea,select{
+  width:100%;
+  background:var(--field);
+  border:1px solid var(--line);
+  border-radius:7px;
+  color:var(--cornsilk);
+  font-family:var(--font-body);
+  font-size:.95rem;
+  padding:11px 12px;
+  outline:none;
+  transition:border-color .15s;
+}
+input:focus,textarea:focus,select:focus{border-color:var(--caramel)}
+textarea{resize:vertical;min-height:70px}
+input[type=number]{-moz-appearance:textfield}
+input::-webkit-outer-spin-button,input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+/* ---------- Tabla de actividades ---------- */
+.chapter{border-top:1px solid var(--line)}
+.chapter:first-child{border-top:none}
+.chapter-title{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:12px 20px;
+  background:rgba(223,132,56,.06);
+  font-family:var(--font-display);
+  font-variation-settings:"wdth" 108,"wght" 650;
+  font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--cornsilk);
+}
+.chapter-title .subt{font-family:var(--font-body);font-weight:600;font-size:.82rem;color:var(--caramel);letter-spacing:0}
+.item{
+  display:grid;
+  grid-template-columns:26px 1fr 92px 74px 120px 116px;
+  gap:10px;align-items:center;
+  padding:10px 20px;
+  border-top:1px solid rgba(60,60,68,.5);
+}
+.item.off{opacity:.38}
+.item .name{font-size:.88rem}
+.item .name small{display:block;color:var(--cornsilk-dim);font-size:.72rem}
+.item input[type=number]{padding:7px 8px;font-size:.85rem;text-align:right}
+.item .unit{font-size:.75rem;color:var(--cornsilk-dim);text-align:center}
+.item .total{font-size:.86rem;font-weight:600;text-align:right;font-variant-numeric:tabular-nums}
+.col-labels{
+  display:grid;
+  grid-template-columns:26px 1fr 92px 74px 120px 116px;
+  gap:10px;padding:8px 20px 4px;
+  font-size:.66rem;letter-spacing:.08em;text-transform:uppercase;color:var(--cornsilk-dim);
+}
+.col-labels span:nth-child(3),.col-labels span:nth-child(5){text-align:right}
+.col-labels span:nth-child(4){text-align:center}
+.col-labels span:nth-child(6){text-align:right}
+/* checkbox */
+.chk{
+  appearance:none;width:18px;height:18px;border:1.5px solid var(--line);
+  border-radius:4px;background:var(--field);cursor:pointer;position:relative;flex-shrink:0;
+}
+.chk:checked{background:var(--caramel);border-color:var(--caramel)}
+.chk:checked::after{
+  content:"";position:absolute;left:5px;top:1.5px;width:5px;height:9px;
+  border:solid var(--raisin);border-width:0 2px 2px 0;transform:rotate(42deg);
+}
+/* ---------- Resumen ---------- */
+.summary{display:grid;grid-template-columns:1fr auto;gap:8px 24px;font-variant-numeric:tabular-nums}
+.summary .lbl{color:var(--cornsilk-dim);font-size:.88rem}
+.summary .val{text-align:right;font-size:.92rem;font-weight:500}
+.summary .divider{grid-column:1/-1;border-top:1px solid var(--line);margin:6px 0}
+.summary .grand .lbl,.summary .grand .val{
+  font-family:var(--font-display);
+  font-variation-settings:"wdth" 110,"wght" 750;
+  font-size:1.15rem;color:var(--caramel);
+}
+.aiu-config{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:18px}
+.aiu-config .field{flex:1;min-width:110px}
+.note{font-size:.72rem;color:var(--cornsilk-dim);margin-top:12px;line-height:1.55}
+/* ---------- Botones ---------- */
+.actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:22px}
+button{
+  font-family:var(--font-display);
+  font-variation-settings:"wdth" 108,"wght" 700;
+  font-size:.8rem;letter-spacing:.1em;text-transform:uppercase;
+  border:none;border-radius:8px;cursor:pointer;
+  padding:13px 22px;transition:transform .12s,filter .15s;
+}
+button:hover{filter:brightness(1.1);transform:translateY(-1px)}
+button:active{transform:translateY(0)}
+.btn-primary{background:var(--caramel);color:var(--raisin)}
+.btn-ghost{background:transparent;color:var(--cornsilk);border:1px solid var(--line)}
+.btn-green{background:var(--green);color:var(--cornsilk)}
+.toast{
+  position:fixed;bottom:22px;left:50%;transform:translateX(-50%) translateY(80px);
+  background:var(--caramel);color:var(--raisin);font-weight:600;font-size:.85rem;
+  padding:11px 22px;border-radius:8px;opacity:0;transition:all .3s;z-index:99;pointer-events:none;
+}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+/* ---------- Documento imprimible ---------- */
+#printDoc{display:none}
+@media print{
+  body *{visibility:hidden}
+  #printDoc,#printDoc *{visibility:visible}
+  #printDoc{
+    display:block;position:absolute;inset:0;
+    background:#fff;color:#1d1d22;
+    font-family:var(--font-body);font-size:11px;padding:34px 40px;
+  }
+  #printDoc .p-head{display:flex;justify-content:space-between;border-bottom:3px solid #DF8438;padding-bottom:12px;margin-bottom:16px}
+  #printDoc .p-brand{font-family:var(--font-display);font-variation-settings:"wdth" 118,"wght" 800;font-size:17px;letter-spacing:.1em}
+  #printDoc .p-brand span{color:#DF8438}
+  #printDoc .p-meta{text-align:right;font-size:9.5px;color:#555;line-height:1.5}
+  #printDoc h2{font-family:var(--font-display);font-size:13px;text-transform:uppercase;letter-spacing:.08em;color:#2F4013;margin:14px 0 6px}
+  #printDoc table{width:100%;border-collapse:collapse;font-size:10px}
+  #printDoc th{background:#2F4013;color:#FEFAE0;text-align:left;padding:5px 7px;font-size:9px;letter-spacing:.05em;text-transform:uppercase}
+  #printDoc td{border-bottom:1px solid #ddd;padding:5px 7px;vertical-align:top}
+  #printDoc .r{text-align:right;font-variant-numeric:tabular-nums}
+  #printDoc .cap td{background:#f3efe0;font-weight:600;color:#2F4013}
+  #printDoc .tot-table{width:46%;margin-left:auto;margin-top:10px}
+  #printDoc .grand td{font-weight:700;font-size:12px;color:#DF8438;border-top:2px solid #DF8438;border-bottom:none}
+  #printDoc .p-client{display:grid;grid-template-columns:1fr 1fr;gap:2px 20px;font-size:10px;margin-bottom:6px}
+  #printDoc .p-client b{color:#2F4013}
+  #printDoc .p-foot{margin-top:22px;font-size:8.5px;color:#666;border-top:1px solid #ccc;padding-top:8px;line-height:1.6}
+}
+/* ---------- Responsive ---------- */
+@media (max-width:680px){
+  .item,.col-labels{grid-template-columns:22px 1fr 70px 52px 92px 88px;gap:6px;padding:10px 12px;font-size:.8rem}
+  .card-body{padding:14px}
+  .chapter-title{padding:10px 12px}
+}
+@media (max-width:480px){
+  .col-labels{display:none}
+  .item{grid-template-columns:22px 1fr;grid-template-areas:"chk name" ". qty";row-gap:8px}
+  .item .chk{grid-area:chk}
+  .item .name{grid-area:name}
+  .item .qty-wrap{grid-area:qty;display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+}
+</style>
+</head>
+<body>
+
+<header class="app-header">
+  <div class="header-inner">
+    <div class="brand" id="hBrand">WVC <span>INGENIERÍA</span> S.A.S.</div>
+    <div class="tagline" id="hTagline">Obra sin improvisación. Proyectos bajo control.</div>
+    <h1>Cotizador de <em>Obra Blanca</em></h1>
+  </div>
+</header>
+
+<main>
+
+<!-- ══════════ 1. DATOS DEL CLIENTE ══════════ -->
+<section class="card">
+  <div class="card-head"><span class="num">01</span><h2>Datos del cliente</h2></div>
+  <div class="card-body">
+    <div class="grid">
+      <div class="field"><label>Nombre completo <span class="req">*</span></label><input type="text" id="cliNombre" placeholder="Ej: Sebastián Valencia"></div>
+      <div class="field"><label>Teléfono / WhatsApp <span class="req">*</span></label><input type="tel" id="cliTel" placeholder="3XX XXX XXXX"></div>
+      <div class="field"><label>Correo electrónico</label><input type="email" id="cliCorreo" placeholder="correo@dominio.com"></div>
+      <div class="field"><label>Proyecto / Conjunto / Barrio <span class="req">*</span></label><input type="text" id="cliProyecto" placeholder="Ej: Bosques de Bambú"></div>
+      <div class="field"><label>Dirección del proyecto <span class="req">*</span></label><input type="text" id="cliDireccion" placeholder="Ej: Calle 82 # 37-68"></div>
+      <div class="field"><label>Ciudad</label><input type="text" id="cliCiudad" value="Pereira, Risaralda"></div>
+    </div>
+    <div class="field" style="margin-top:16px"><label>Observaciones</label><textarea id="cliObs" placeholder="Ej: cambiar solo piso de cocina e instalar nuevo en todo el apto"></textarea></div>
+  </div>
+</section>
+
+<!-- ══════════ 2. DATOS DEL INMUEBLE ══════════ -->
+<section class="card">
+  <div class="card-head"><span class="num">02</span><h2>Datos del inmueble</h2></div>
+  <div class="card-body">
+    <div class="grid">
+      <div class="field"><label>Área total del apartamento (m²) <span class="req">*</span></label><input type="number" id="area" value="45.7" min="10" step="0.1"></div>
+      <div class="field"><label>Tipo de vivienda</label>
+        <select id="tipoViv">
+          <option value="VIS" selected>Apartamento VIS</option>
+          <option value="No VIS">Apartamento No VIS</option>
+          <option value="Casa">Casa</option>
+        </select>
+      </div>
+      <div class="field"><label>Número de baños</label><input type="number" id="numBanos" value="1" min="0" step="1"></div>
+      <div class="field"><label>Número de alcobas</label><input type="number" id="numAlcobas" value="2" min="0" step="1"></div>
+    </div>
+    <p class="note">Al modificar el área o el número de baños, las cantidades de cada actividad se recalculan automáticamente con factores típicos de vivienda VIS. Toda cantidad puede ajustarse manualmente después.</p>
+  </div>
+</section>
+
+<!-- ══════════ 3. ACTIVIDADES ══════════ -->
+<section class="card">
+  <div class="card-head"><span class="num">03</span><h2>Actividades de obra blanca</h2></div>
+  <div class="col-labels"><span></span><span>Actividad</span><span>Cantidad</span><span>Und</span><span>Vr. Unitario</span><span>Vr. Total</span></div>
+  <div id="chapters"></div>
+</section>
+
+<!-- ══════════ 4. RESUMEN ══════════ -->
+<section class="card">
+  <div class="card-head"><span class="num">04</span><h2>Resumen económico</h2></div>
+  <div class="card-body">
+    <div class="aiu-config">
+      <div class="field"><label>Administración (%)</label><input type="number" id="pAdmin" value="10" min="0" step="0.5"></div>
+      <div class="field"><label>Imprevistos (%)</label><input type="number" id="pImprev" value="3" min="0" step="0.5"></div>
+      <div class="field"><label>Utilidad (%)</label><input type="number" id="pUtil" value="7" min="0" step="0.5"></div>
+      <div class="field"><label>IVA sobre utilidad (%)</label><input type="number" id="pIva" value="19" min="0" step="1"></div>
+    </div>
+    <div class="summary" id="summary"></div>
+    <p class="note">El IVA se aplica únicamente sobre la Utilidad, conforme al Decreto 1372 de 1992 para contratos de construcción. Cotización válida por 15 días calendario. Los precios unitarios son de referencia para el mercado de Pereira / Eje Cafetero y pueden ajustarse tras visita técnica.</p>
+    <div class="actions">
+      <button class="btn-primary" onclick="generarPDF()">Descargar cotización PDF</button>
+      <button class="btn-green" onclick="enviarWhatsApp()">Enviar por WhatsApp</button>
+      <button class="btn-ghost" onclick="copiarResumen()">Copiar resumen</button>
+      <button class="btn-ghost" onclick="reiniciar()">Reiniciar</button>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<div class="toast" id="toast"></div>
+
+<!-- Documento imprimible -->
+<div id="printDoc"></div>
+
+<script>
+/* ╔══════════════════════════════════════════════════════════════════╗
+   ║  DATOS DE LA EMPRESA — EDITA SOLO ESTE BLOQUE                     ║
+   ║  Cambia el texto entre comillas. No borres las comillas ni comas. ║
+   ╚══════════════════════════════════════════════════════════════════╝ */
+const EMPRESA = {
+  nombre:      "WVC INGENIERÍA S.A.S.",
+  nit:         "NIT 901.403.778-1",
+  direccion:   "Calle 3 # 13-18 — Pereira",
+  telefono:    "3122458512",                                    // ej: "+57 3XX XXX XXXX"
+  correo:      "wvcingenieria@gmail.com",                                    // ej: "contacto@wvcingenieria.com"
+  web:         "wvcingenieria.com",
+  tagline:     "Obra sin improvisación. Proyectos bajo control.",
+  representante:"Sebastian Valencia Garcia, Representante Legal",
+  validezDias: 15,
+  formaPago:   "50% anticipo, 40% avance de obra, 10% contra entrega",
+  garantia:    "Garantía de 12 meses sobre mano de obra",
+  ciudadDefecto:"Pereira, Risaralda",
+};
+/* ╚══════════ FIN DEL BLOQUE EDITABLE DE EMPRESA ══════════╝ */
+
+
+/* ══════════════════ CATÁLOGO ══════════════════
+   qty(A, banos, alcobas) devuelve la cantidad sugerida.
+   Precios de referencia Pereira / Eje Cafetero 2026 (COP), editables en pantalla. */
+const CATALOGO = [
+  {
+    capitulo: "1. Preliminares y desmonte",
+    items: [
+      { id:"ret_piso",  nombre:"Retiro de piso existente", detalle:"Incluye retiro de escombros", und:"m²", vu:14000,  on:false, qty:(A)=>A },
+      { id:"ret_ench",  nombre:"Demolición de enchape en muros", detalle:"Baños y cocina", und:"m²", vu:16000, on:false, qty:(A,b)=>b*12+6 },
+      { id:"proteccion",nombre:"Protección de áreas y mobiliario", detalle:"Plástico, cartón, cinta", und:"gl", vu:150000, on:true, qty:()=>1 },
+    ]
+  },
+  {
+    capitulo: "2. Pisos",
+    items: [
+      { id:"piso_spc",  nombre:"Suministro e instalación piso SPC", detalle:"Incluye espuma niveladora, 5% desperdicio", und:"m²", vu:88000, on:true, qty:(A)=>Math.round(A*1.05*10)/10 },
+      { id:"piso_porc", nombre:"Suministro e instalación porcelanato 60×60", detalle:"Pegacor máximo + boquilla", und:"m²", vu:125000, on:false, qty:(A)=>Math.round(A*1.07*10)/10 },
+      { id:"piso_cer",  nombre:"Suministro e instalación cerámica de piso", detalle:"Tráfico 4, formato 45×45 o 60×60", und:"m²", vu:78000, on:false, qty:(A)=>Math.round(A*1.07*10)/10 },
+      { id:"nivelacion",nombre:"Nivelación / alistado de piso", detalle:"Mortero autonivelante hasta 1 cm", und:"m²", vu:22000, on:false, qty:(A)=>A },
+      { id:"guardaesc", nombre:"Suministro e instalación guardaescoba", detalle:"PVC o MDF 8 cm, incluye esquineros", und:"ml", vu:18000, on:true, qty:(A)=>Math.round(A*0.85) },
+    ]
+  },
+  {
+    capitulo: "3. Muros, cielos y pintura",
+    items: [
+      { id:"resane",    nombre:"Resane y estuco de muros", detalle:"Puntos críticos y filos", und:"m²", vu:14000, on:true, qty:(A)=>Math.round(A*2.4*0.3) },
+      { id:"pint_muros",nombre:"Pintura de muros — vinilo tipo 1", detalle:"3 manos, color a elección", und:"m²", vu:15000, on:true, qty:(A)=>Math.round(A*2.4) },
+      { id:"pint_cielo",nombre:"Pintura de cielos — vinilo tipo 1", detalle:"2 manos, blanco", und:"m²", vu:14000, on:true, qty:(A)=>Math.round(A) },
+      { id:"cielo_dry", nombre:"Cielo raso en drywall", detalle:"Junta perdida, incluye pintura", und:"m²", vu:88000, on:false, qty:(A)=>Math.round(A*0.4) },
+    ]
+  },
+  {
+    capitulo: "4. Enchapes",
+    items: [
+      { id:"ench_bano", nombre:"Enchape de muros en baño", detalle:"Cerámica pared h=1.80 m aprox.", und:"m²", vu:95000, on:false, qty:(A,b)=>b*12 },
+      { id:"ench_coc",  nombre:"Enchape salpicadero cocina", detalle:"Entre mesón y alacena", und:"m²", vu:98000, on:false, qty:()=>4 },
+    ]
+  },
+  {
+    capitulo: "5. Aparatos, grifería y mesones",
+    items: [
+      { id:"combo_sani",nombre:"Combo sanitario + lavamanos", detalle:"Línea económica Corona/Mancesa, instalado", und:"un", vu:880000, on:false, qty:(A,b)=>b },
+      { id:"griferia",  nombre:"Grifería ducha + accesorios de baño", detalle:"Monocontrol, incluye instalación", und:"un", vu:420000, on:false, qty:(A,b)=>b },
+      { id:"meson",     nombre:"Mesón de cocina en acero inoxidable", detalle:"Con poceta, hasta 1.50 m", und:"un", vu:750000, on:false, qty:()=>1 },
+      { id:"lavadero",  nombre:"Lavadero prefabricado en granito", detalle:"Instalado en zona de ropas", und:"un", vu:520000, on:false, qty:()=>1 },
+    ]
+  },
+  {
+    capitulo: "6. Carpintería y puertas",
+    items: [
+      { id:"pta_princ", nombre:"Puerta principal de seguridad", detalle:"Metálica entamborada, con cerradura", und:"un", vu:1450000, on:false, qty:()=>1 },
+      { id:"pta_int",   nombre:"Puertas interiores entamboradas", detalle:"Incluye marco, cerradura y pintura", und:"un", vu:680000, on:false, qty:(A,b,al)=>al+b },
+      { id:"closet",    nombre:"Clóset en melamina por alcoba", detalle:"2.0 × 2.4 m, entrepaños + colgado", und:"un", vu:2100000, on:false, qty:(A,b,al)=>al },
+      { id:"muebles_coc",nombre:"Mueble bajo de cocina en melamina", detalle:"Por metro lineal, incluye instalación", und:"ml", vu:950000, on:false, qty:()=>1.5 },
+    ]
+  },
+  {
+    capitulo: "7. Aseo y entrega",
+    items: [
+      { id:"aseo", nombre:"Aseo general y retiro final de escombros", detalle:"Incluye dossier fotográfico de entrega", und:"gl", vu:250000, on:true, qty:()=>1 },
+    ]
+  },
+];
+
+const fmt = n => "$ " + Math.round(n).toLocaleString("es-CO");
+const $ = id => document.getElementById(id);
+let state = {};
+
+/* ───────── Construcción de la interfaz ───────── */
+function build(){
+  const wrap = $("chapters");
+  wrap.innerHTML = "";
+  CATALOGO.forEach((cap,ci)=>{
+    const div = document.createElement("div");
+    div.className = "chapter";
+    div.innerHTML = `<div class="chapter-title"><span>${cap.capitulo}</span><span class="subt" id="capTot${ci}"></span></div>`;
+    cap.items.forEach(it=>{
+      state[it.id] = { on: it.on, cant: 0, vu: it.vu, manual:false };
+      const row = document.createElement("div");
+      row.className = "item" + (it.on ? "" : " off");
+      row.id = "row_"+it.id;
+      row.innerHTML = `
+        <input type="checkbox" class="chk" ${it.on?"checked":""} onchange="toggle('${it.id}',this.checked)">
+        <div class="name">${it.nombre}<small>${it.detalle}</small></div>
+        <div class="qty-wrap" style="display:contents">
+          <input type="number" id="cant_${it.id}" step="0.1" min="0" oninput="setCant('${it.id}',this.value)">
+          <span class="unit">${it.und}</span>
+          <input type="number" id="vu_${it.id}" step="1000" min="0" value="${it.vu}" oninput="setVu('${it.id}',this.value)">
+          <div class="total" id="tot_${it.id}">$ 0</div>
+        </div>`;
+      div.appendChild(row);
+    });
+    wrap.appendChild(div);
+  });
+  recalcCantidades();
+}
+
+function recalcCantidades(){
+  const A  = parseFloat($("area").value)||0;
+  const b  = parseInt($("numBanos").value)||0;
+  const al = parseInt($("numAlcobas").value)||0;
+  CATALOGO.forEach(cap=>cap.items.forEach(it=>{
+    if(!state[it.id].manual){
+      state[it.id].cant = it.qty(A,b,al);
+      $("cant_"+it.id).value = state[it.id].cant;
+    }
+  }));
+  recalc();
+}
+
+function toggle(id,on){ state[id].on = on; $("row_"+id).classList.toggle("off",!on); recalc(); }
+function setCant(id,v){ state[id].manual = true; state[id].cant = parseFloat(v)||0; recalc(); }
+function setVu(id,v){ state[id].vu = parseFloat(v)||0; recalc(); }
+
+/* ───────── Cálculo ───────── */
+function calcular(){
+  let capitulos = [], costoDirecto = 0;
+  CATALOGO.forEach((cap,ci)=>{
+    let items = [], sub = 0;
+    cap.items.forEach(it=>{
+      const s = state[it.id];
+      const tot = s.on ? s.cant * s.vu : 0;
+      $("tot_"+it.id).textContent = fmt(tot);
+      if(s.on && tot > 0) { items.push({...it, cant:s.cant, vu:s.vu, tot}); sub += tot; }
+    });
+    $("capTot"+ci).textContent = sub>0 ? fmt(sub) : "";
+    if(items.length) capitulos.push({nombre:cap.capitulo, items, sub});
+    costoDirecto += sub;
+  });
+  const pA = parseFloat($("pAdmin").value)||0, pI = parseFloat($("pImprev").value)||0,
+        pU = parseFloat($("pUtil").value)||0,  pV = parseFloat($("pIva").value)||0;
+  const admin = costoDirecto*pA/100, imprev = costoDirecto*pI/100, util = costoDirecto*pU/100;
+  const iva = util*pV/100;
+  const total = costoDirecto + admin + imprev + util + iva;
+  return {capitulos, costoDirecto, admin, imprev, util, iva, total, pA, pI, pU, pV};
+}
+
+function recalc(){
+  const r = calcular();
+  $("summary").innerHTML = `
+    <div class="lbl">Costo directo de obra</div><div class="val">${fmt(r.costoDirecto)}</div>
+    <div class="lbl">Administración (${r.pA}%)</div><div class="val">${fmt(r.admin)}</div>
+    <div class="lbl">Imprevistos (${r.pI}%)</div><div class="val">${fmt(r.imprev)}</div>
+    <div class="lbl">Utilidad (${r.pU}%)</div><div class="val">${fmt(r.util)}</div>
+    <div class="lbl">IVA sobre utilidad (${r.pV}%)</div><div class="val">${fmt(r.iva)}</div>
+    <div class="divider"></div>
+    <div class="grand" style="display:contents"><div class="lbl">Valor total</div><div class="val">${fmt(r.total)}</div></div>`;
+}
+
+/* ───────── PDF (impresión) ───────── */
+function generarPDF(){
+  const r = calcular();
+  if(r.costoDirecto===0){ toast("Selecciona al menos una actividad"); return; }
+  const hoy = new Date().toLocaleDateString("es-CO",{day:"numeric",month:"long",year:"numeric"});
+  const cot = "COT-OB-" + new Date().toISOString().slice(0,10).replace(/-/g,"") + "-" + String(Date.now()).slice(-4);
+  let rows = "";
+  r.capitulos.forEach(cap=>{
+    rows += `<tr class="cap"><td colspan="5">${cap.nombre}</td><td class="r">${fmt(cap.sub)}</td></tr>`;
+    cap.items.forEach(it=>{
+      rows += `<tr><td></td><td>${it.nombre}<br><span style="color:#888;font-size:8.5px">${it.detalle}</span></td>
+      <td class="r">${it.cant}</td><td>${it.und}</td><td class="r">${fmt(it.vu)}</td><td class="r">${fmt(it.tot)}</td></tr>`;
+    });
+  });
+  $("printDoc").innerHTML = `
+    <div class="p-head">
+      <div>
+        <div class="p-brand">${EMPRESA.nombre.replace("INGENIERÍA","<span>INGENIERÍA</span>")}</div>
+        <div style="font-size:9px;color:#666;margin-top:3px">${EMPRESA.tagline}</div>
+      </div>
+      <div class="p-meta">
+        ${EMPRESA.nit}<br>${EMPRESA.direccion}<br>
+        ${EMPRESA.telefono ? EMPRESA.telefono + " · " : ""}${EMPRESA.correo ? EMPRESA.correo + "<br>" : ""}
+        Cotización N.º <b>${cot}</b><br>${hoy}
+      </div>
+    </div>
+    <h2>Cotización de obra blanca — ${$("tipoViv").value}</h2>
+    <div class="p-client">
+      <div><b>Cliente:</b> ${$("cliNombre").value||"—"}</div>
+      <div><b>Teléfono:</b> ${$("cliTel").value||"—"}</div>
+      <div><b>Correo:</b> ${$("cliCorreo").value||"—"}</div>
+      <div><b>Proyecto:</b> ${$("cliProyecto").value||"—"}</div>
+      <div><b>Dirección:</b> ${$("cliDireccion").value||"—"}, ${$("cliCiudad").value||""}</div>
+      <div><b>Área:</b> ${$("area").value} m² · ${$("numBanos").value} baño(s) · ${$("numAlcobas").value} alcoba(s)</div>
+    </div>
+    ${$("cliObs").value ? `<div style="font-size:9.5px;margin-bottom:8px"><b style="color:#2F4013">Observaciones:</b> ${$("cliObs").value}</div>` : ""}
+    <table>
+      <thead><tr><th style="width:12px"></th><th>Descripción</th><th class="r">Cant.</th><th>Und</th><th class="r">Vr. Unitario</th><th class="r">Vr. Total</th></tr></thead>
+      <tbody>${rows}</tbody>
+    </table>
+    <table class="tot-table">
+      <tr><td>Costo directo</td><td class="r">${fmt(r.costoDirecto)}</td></tr>
+      <tr><td>Administración (${r.pA}%)</td><td class="r">${fmt(r.admin)}</td></tr>
+      <tr><td>Imprevistos (${r.pI}%)</td><td class="r">${fmt(r.imprev)}</td></tr>
+      <tr><td>Utilidad (${r.pU}%)</td><td class="r">${fmt(r.util)}</td></tr>
+      <tr><td>IVA sobre utilidad (${r.pV}%)</td><td class="r">${fmt(r.iva)}</td></tr>
+      <tr class="grand"><td>VALOR TOTAL</td><td class="r">${fmt(r.total)}</td></tr>
+    </table>
+    <div class="p-foot">
+      Validez de la oferta: ${EMPRESA.validezDias} días calendario · Forma de pago sugerida: ${EMPRESA.formaPago} ·
+      El IVA se liquida únicamente sobre la utilidad conforme al Decreto 1372 de 1992 ·
+      Los precios están sujetos a confirmación tras visita técnica · ${EMPRESA.garantia}.
+      <br><b>${EMPRESA.nombre}</b> — ${EMPRESA.representante}.
+    </div>`;
+  window.print();
+}
+
+/* ───────── WhatsApp / Copiar ───────── */
+function resumenTexto(){
+  const r = calcular();
+  let t = `*COTIZACIÓN OBRA BLANCA — ${EMPRESA.nombre}*\n`;
+  t += `Cliente: ${$("cliNombre").value||"—"}\n`;
+  t += `Proyecto: ${$("cliProyecto").value||"—"} — ${$("cliDireccion").value||""}\n`;
+  t += `Área: ${$("area").value} m² (${$("tipoViv").value})\n\n`;
+  r.capitulos.forEach(cap=>{ t += `▪ ${cap.nombre}: ${fmt(cap.sub)}\n`; });
+  t += `\nCosto directo: ${fmt(r.costoDirecto)}\n`;
+  t += `AIU ${r.pA}+${r.pI}+${r.pU}% + IVA/U: ${fmt(r.admin+r.imprev+r.util+r.iva)}\n`;
+  t += `*VALOR TOTAL: ${fmt(r.total)}*\n\n`;
+  t += `_Validez ${EMPRESA.validezDias} días. Precios sujetos a visita técnica._\n${EMPRESA.tagline}`;
+  return t;
+}
+function enviarWhatsApp(){
+  const r = calcular();
+  if(r.costoDirecto===0){ toast("Selecciona al menos una actividad"); return; }
+  let tel = ($("cliTel").value||"").replace(/\D/g,"");
+  if(tel.length===10) tel = "57"+tel;
+  const url = "https://wa.me/" + tel + "?text=" + encodeURIComponent(resumenTexto());
+  window.open(url,"_blank");
+}
+function copiarResumen(){
+  navigator.clipboard.writeText(resumenTexto()).then(()=>toast("Resumen copiado al portapapeles"));
+}
+function reiniciar(){
+  if(confirm("¿Reiniciar toda la cotización?")) location.reload();
+}
+function toast(msg){
+  const t = $("toast"); t.textContent = msg; t.classList.add("show");
+  setTimeout(()=>t.classList.remove("show"), 2600);
+}
+
+/* ───────── Eventos ───────── */
+["area","numBanos","numAlcobas"].forEach(id=>$(id).addEventListener("input",recalcCantidades));
+["pAdmin","pImprev","pUtil","pIva"].forEach(id=>$(id).addEventListener("input",recalc));
+
+/* Poblar encabezado y ciudad desde el bloque EMPRESA */
+$("hBrand").innerHTML = EMPRESA.nombre.replace("INGENIERÍA","<span>INGENIERÍA</span>");
+$("hTagline").textContent = EMPRESA.tagline;
+$("cliCiudad").value = EMPRESA.ciudadDefecto;
+build();
+
+/* ───────── PWA: funciona sin conexión e instalable en el celular ───────── */
+if("serviceWorker" in navigator){
+  window.addEventListener("load",()=>navigator.serviceWorker.register("sw.js").catch(()=>{}));
+}
+</script>
+</body>
+</html>
